@@ -1,0 +1,186 @@
+﻿
+<div id="wrapper" ng-controller="repoController">
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <h1 class="page-header" style="padding-bottom: 0px;">
+                            <div style="width: 22%;display: inline-block;">
+                                <div class="select">
+                                    <div class="select">
+                                        <div class="input_in" ng-click="arrowShow()">
+                                            <input type="text" ng-model="organizationName" readonly="readonly"/>
+                                        </div>
+                                        <div class="city hide">
+                                            <li ng-repeat="org in orgName track by $index" ng-class="{orgSelect:$index == orgIndex}"  ng-click="orgShow(org)" ng-mouseover="fadeOrg($index)" ng-mouseleave="reOrg()">
+                                                {{org.name}}
+                                            </li>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="rightButton ng-hide" id="createRepo" href="#createRepo" ng-show="visibleBtnCreateRepo"><span class="ff">Create Repository <i class="fa fa-plus"></i> </span></a>
+                            <a class="rightButton ng-hide" id="createTeam" href="#createTeam" ng-show="visibleBtnCreateTeam"><span class="ff">Create Team <i class="fa fa-plus"></i> </span></a>
+                        </h1>
+                    </div>
+                </div>
+                 <!-- /. ROW  -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs boxHr">
+                            <li class="active">
+                                <a data-toggle="tab" data-target="#repositories" ng-click="showCreateRepo()"><i class="fa fa-book SRS-font-size-normal"></i> Repositories</a>
+                            </li>
+                            <li><a data-toggle="tab" data-target="#teams" ng-click="showCreateTeams()"><i class="fa fa-group"></i> Teams</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="repositories">
+                                <div class="row ng-hide" ng-show="!tipRepo">
+                                    <div class="col-md-7 col-sm-11 col-xs-12">
+                                        <div class="bar" style="margin-top: 20px">
+                                            <form class="input-group">
+                                                <input class="form-control" type="text" placeholder="Type to filter repositories by name">
+                                                <span class="btn btn-info input-group-addon"><i class="fa fa-search"></i></span>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" ng-repeat="data in repoItem track by $index" ng-mouseover="fadeSiblings($index)" ng-mouseleave="reSiblings()" ng-click="organizationJumpRopeDetail(data)">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="flex-container" ng-class="{divOver:$index==flexIndex}">
+                                            <div class="flex-item flex-item1">
+                                                <div class="flex-item11">
+                                                    <img src="assets/img/avatarLeft.png">
+                                                </div>
+                                                <div>
+                                                    <div class="flex-item12">{{data.namespace}}/{{data.name}}</div>
+                                                    <div class="flex-item13">{{data.visibility}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-item flex-item2">
+                                                <div>{{data.star}}</div>
+                                                <div>STARS</div>
+                                            </div>
+                                            <div class="flex-item flex-item3">
+                                                <div>{{data.pull}}</div>
+                                                <div>PULL</div>
+                                            </div>
+                                            <div class="flex-item flex-item4">
+                                                <i class="fa fa-chevron-right fa-lg"></i>
+                                                <div>DETAILS</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ng-hide" ng-show="tipRepo">
+                                    <h3 style="color: #216880;margin: 30px 0 20px">There are no any repositories in this namespace</h3>
+                                    <h4>To create repository,there are two methods</h4>
+                                    <h4>1. Click <a ng-click="$location.path('createOrgan')"><img src="assets/img/organization-button.png" style="height: 30px;width: 120px;border-radius: 3px"></a> button </h4>
+                                    <h4>2. Use docker command to login and push repository<br>
+                                    <small style="margin-left: 20px;">$ docker login registry.samsungcloud.org </small><br>
+                                    <small style="margin-left: 20px;">Username: </small><br>
+                                    <small style="margin-left: 20px;">Password: </small><br>
+                                    <small style="margin-left: 20px;">$ docker push registry.samsungcloud.org/testtest/YOUR_IMAGE </small></h4>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="teams">
+                                <div class="row col-md-12 col-sm-12 col-xs-12" ng-hide="showTeam">
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <div class="teamPanel">
+                                            <div class="panelHeading">
+                                                <h4>Choose Team</h4>
+                                            </div>
+                                            <div class="panelBody" >
+                                                <li  ng-repeat="item in teamNames" ng-click="editTeam(item.name,$index)">{{item.name}}<i class="glyphicon glyphicon-ok ng-hide" style="float: right" ng-show="fabricImg1=$index==fabricIsSelected"></i></li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <div class="teamPanel">
+                                            <div class="panelHeading">
+                                                <h4>Team members</h4>
+                                            </div>
+                                            <div class="panelBody">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="teamMembers" placeholder="Add new user by username or email">
+                                                    <span class="input-group-addon btn-primary" style="cursor: pointer" ng-click="createTeamMember()"><i class="fa fa-plus"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="panelBody" id="memberChoose">
+                                                <li ng-repeat="member in teamMember track by $index">{{member.name}}<button class="btn btn-danger" ng-click="deleteTeamMember(member)" ng-hide="showIcon=$index==showDeleteIcon"><i class="glyphicon glyphicon-remove"></i></button></li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <div class="teamPanel">
+                                            <div class="panelHeading">
+                                                <h4>Edit {{deleteTeamName}}</h4>
+                                            </div>
+                                            <div class="panelBody" style="padding: 0 15px 15px 15px">
+                                                <h4>Team name</h4>
+                                                <h5>{{editTeamName}}</h5>
+                                                <h4>Team description</h4>
+                                                <form role="form" name="teamForm" novalidate>
+                                                    <textarea class="form-control" rows="3" placeholder="Null" id="reTeamDescription" name="reTeamDescription" ng-model="reTeamDescription" ng-minlength="6"  ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/"></textarea>
+                                                    <div ng-show="teamForm.reTeamDescription.$dirty && teamForm.reTeamDescription.$invalid">
+                                                        <div class="warning" ng-show="teamForm.reTeamDescription.$error.minlength">* the length should be over 6 characters</div>
+                                                        <div class="warning" ng-show="teamForm.reTeamDescription.$error.pattern">* invalid format & should start with character</div>
+                                                    </div>
+                                                </form>
+                                                <button class="btn btn-primary" ng-click="saveEditTeam()">Save</button>
+                                                <button class="btn btn-danger" ng-show="visible" ng-click="deleteEditTeam()">Delete</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--初始隐藏部分-->
+                                <div class="row col-md-12 col-sm-12 col-xs-12 ng-hide" ng-show="showTeam">
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <div class="teamPanel">
+                                            <div class="panelHeading">
+                                                <h4>Choose Team</h4>
+                                            </div>
+                                            <div class="panelBody" >
+                                                <li ng-model="changeTeamSelected">{{changeTeamSelected}}<i class="glyphicon glyphicon-ok" style="float: right"></i></li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <div class="teamPanel">
+                                            <div class="panelHeading">
+                                                <h4>Edit {{changeTeamSelected}}</h4>
+                                            </div>
+                                            <div class="panelBody" style="padding: 0 15px 15px 15px">
+                                                <h4>Team name</h4>
+                                                <h5>{{changeTeamSelected}}</h5>
+                                                <h4>Team description</h4>
+                                                <form role="form" name="changeTeamForm" novalidate>
+                                                    <textarea class="form-control" rows="3" placeholder="Null" name="changeTeamDescription" ng-model="changeTeamDescription" ng-minlength="6"  ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/"></textarea>
+                                                    <div ng-show="changeTeamForm.changeTeamDescription.$dirty && changeTeamForm.changeTeamDescription.$invalid">
+                                                        <div class="warning" ng-show="changeTeamForm.changeTeamDescription.$error.minlength">* the length should be over 6 characters</div>
+                                                        <div class="warning" ng-show="changeTeamForm.changeTeamDescription.$error.pattern">* invalid format & should start with character</div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                <!-- /.col-lg-12 -->
+                </div>
+			</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+

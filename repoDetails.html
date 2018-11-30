@@ -1,0 +1,832 @@
+﻿
+    <div id="wrapper" ng-controller="repoDetailsCtrl">
+        <div id="page-wrapper">
+            <div id="page-inner">
+
+			    <div class="row">
+                    <div class="col-md-12 col-xs-12 col-lg-12">
+                        <h1 class="page-header" id="starColor">
+                            {{infoNamespace}}/{{reponame}}<i class="fa fa-star-o" ng-show="!isshow_starStyle" ng-click="isshow_starStyle=true"></i><i ng-click="isshow_starStyle=false" ng-show="isshow_starStyle" class="fa fa-star ng-hide"></i><small>{{privateOr}} REPOSITORY</small>
+                        </h1>
+                    </div>
+                </div>
+                 <!-- /. ROW  -->
+                <div class="row">
+                    <div class="box col-md-12 col-xs-12 col-lg-12">
+                        <ul class="nav nav-tabs boxHr">
+                            <li class="active" ng-click="showInfo()">
+                                <a data-toggle="tab" data-target="#info">Repo Info</a>
+                            </li>
+                            <li ng-click="showTags()" class="ng-hide" ng-show="judgmentAuthority">
+                                <a data-toggle="tab" data-target="#tags">Tags</a>
+                            </li>
+                            <li ng-click="showSnapshots()" class="ng-hide" ng-show="judgmentAuthority">
+                                <a data-toggle="tab" data-target="#snapshots">Snapshots</a>
+                            </li>
+                            <li ng-click="showCollaborators()" class="ng-hide" ng-show="judgmentAuthority">
+                                <a data-toggle="tab" data-target="#collaborators">Collaborators</a>
+                            </li>
+                            <li ng-click="showWebhooks()" class="ng-hide" ng-show="judgmentAuthority">
+                                <a data-toggle="tab" data-target="#webhooks">Webhooks</a>
+                            </li>
+                            <!--li ng-click="showHistory()" class="ng-hide" ng-show="judgmentAuthority">
+                                <a data-toggle="tab" data-target="#history">History</a>
+                            </li-->
+                            <li ng-click="showSetting()" class="ng-hide" ng-show="judgmentAuthority">
+                                <a data-toggle="tab" data-target="#setting">Setting</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="info">
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <div class="panel-group panel-group-success">
+                                            <div class="panel headBord">
+                                                <div class="panel-heading headBack">
+                                                    Short Description
+                                                    <a type="btn" title="edit" class="accordion-toggle" id="editBoxOne"><i class="fa fa-edit"></i></a>
+                                                </div>
+                                                <div class="panel-collapse">
+                                                    <div id="collapseBodyOne">
+                                                        <div class="panel-body">
+                                                            {{msgShortDescription}}
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapseBodyTwo">
+                                                        <div class="panel-body">
+                                                            <div class="form-group formBord">
+                                                                <input class="form-control" id="showShortDescription" value="{{msgShortDescription}}">
+                                                                <button type="reset" class="btn btn-default" id="cancelForm">Cancel</button>
+                                                                <button type="submit" class="btn btn-info" ng-click="saveShortDescription()">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-group panel-group-success">
+                                            <div class="panel headBord">
+                                                <div class="panel-heading headBack">
+                                                    Full Description
+                                                    <a type="btn" title="edit" class="accordion-toggle" id="editBoxTwo"><i class="fa fa-edit"></i></a>
+                                                </div>
+                                                <div class="panel-collapse">
+                                                    <div id="BodyOne">
+                                                        <div class="panel-body">
+                                                            <div id="showResult"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="BodyTwo">
+                                                        <div class="panel-body">
+                                                            <div class="form-group formBord">
+                                                                <textarea class="form-control" rows="10" id="oriContent" placeholder="{{msgFullDescription}}" ng-keyup="convert()"></textarea>
+                                                                <div id="result"></div>
+                                                                <button type="reset" class="btn btn-default" id="cancelText">Cancel</button>
+                                                                <button type="submit" class="btn btn-info " ng-click="saveFullDescription()">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <div class="panel-group panel-group-success">
+                                            <div class="panel headBord">
+                                                <div class="panel-heading headBack">
+                                                    Docker Pull Command
+                                                    <a title="copy" class="accordion-toggle"><div ng-click="copyInfo()"><i class="fa fa-clipboard"></i></div></a>
+                                                </div>
+                                                <div class="panel-collapse">
+                                                    <div class="panel-body" id="copyInfo">
+                                                        {{locationUrl}}/{{repoInfo.namespace}}/{{repoInfo.name}}
+                                                    </div>
+                                                    <textarea id="replaceCopyInfo" style="width: 0px;height: 0px"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-group panel-group-success">
+                                            <div class="panel headBord">
+                                                <div class="panel-heading headBack">
+                                                    Owner
+                                                </div>
+                                                <div class="panel-collapse">
+                                                    <div class="panel-body">
+                                                        {{repoInfo.namespace}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tags">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive tagTable">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                <tr class="lineHight">
+                                                    <th>Tag Name</th>
+                                                    <th>Size</th>
+                                                    <th>Create Time</th>
+                                                    <th>Updated Time</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="lineHight" ng-repeat="tag in tags">
+                                                    <td>{{tag.name}}</td>
+                                                    <td>{{tag.size}}</td>
+                                                    <td>{{tag.createAt}}</td>
+                                                    <td>{{tag.updateAt}}</td>
+                                                </tr>
+                                                <tr class="ng-hide" ng-show="tipRepoDetailTags">
+                                                    <td><p><strong>No tags for this repository.</strong></p></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="snapshots">
+                                <p><strong>No snapshots for this repository.</strong></p>
+                            </div>
+                            <div class="tab-pane fade" id="collaborators">
+                                <div class="row" ng-hide="visibilityCollaborators">
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <div class="table-responsive  collapsedTable">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                <tr class="lineHight">
+                                                    <th>Username</th>
+                                                    <th>Access</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="lineHight" ng-repeat="data in accessUserLevel">
+                                                    <td>{{data.userName}}</td>
+                                                    <td>{{data.permission}}</td>
+                                                    <td><button class="btn btn-danger" ng-click="deleteLevelUser(data)"><i class="fa fa-times"></i>Remove</button></td>
+                                                </tr>
+                                                <tr class="ng-hide" ng-show="tipRepoDetailColl">
+                                                    <td><p><strong>No collaborators for this repository.</strong></p></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <div class="boxRight">
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input class="form-control" id="userLevel">
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control" id="accessLevel">
+                                                    <option value="READ">Read-Only</option>
+                                                    <option value="WRITE">Read-Write</option>
+                                                    <option value="ADMIN">Admin</option>
+                                                </select>
+                                            </div>
+                                            <button class="btn btn-primary" ng-click="submitCollUser()">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--hide collaborators Team User-->
+                                <div class="row ng-hide"  ng-show="visibilityCollaborators">
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <div class="table-responsive  collapsedTable">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                <tr class="lineHight">
+                                                    <th>Team Name</th>
+                                                    <th>Access</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="lineHight" ng-repeat="data in accessTeamLevel">
+                                                    <td>{{data.name}}</td>
+                                                    <td>{{data.accessLevel}}</td>
+                                                    <td><button class="btn btn-danger" ng-click="deleteLevelTeam(data)"><i class="fa fa-times"></i>Remove</button></td>
+                                                </tr>
+                                                <tr class="ng-hide" ng-show="tipRepoDetailColl">
+                                                    <td><p><strong>No collaborators for this repository.</strong></p></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <div class="boxRight">
+                                            <div class="form-group">
+                                                <label>Team Name</label>
+                                                <select class="form-control" ng-model="selectedTeam" ng-change="change()">
+                                                    <option ng-repeat="item in teamsName">{{item.name}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control" id="accessLevelTeam">
+                                                    <option value="READ">Read-Only</option>
+                                                    <option value="WRITE">Read-Write</option>
+                                                    <option value="ADMIN">Admin</option>
+                                                </select>
+                                            </div>
+                                            <button class="btn btn-primary" ng-click="submitCollTeam()">Add Team</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--div class="tab-pane fade" id="webhooks">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel-group panel-group-success" id="accordion">
+                                            <div class="panel panel-default headBord">
+                                                <div class="panel-heading" id="headBack">
+                                                    <button class="btn btn-primary"  data-toggle="collapse" data-parent="#accordion"
+                                                            href="#collapseOne"><i class="fa fa-plus"></i>Create Webhooks</button>
+                                                </div>
+                                                <div class="panel-collapse collapse" id="collapseOne">
+                                                    <div class="panel-body" id="bodyInfo">
+                                                        <p>Create new webhook</p>
+                                                        <small>A Post request will be sent to the input URL.</small>
+                                                        <small class="borderBotom">You can select the triger event, also you can specify the http header and http body</small><hr>
+
+
+                                                        <form  class="form-inline" role="form">
+                                                            <div class="form-group">
+                                                                <label>Name:</label>
+                                                                <input class="form-control" placeholder="webhook name">
+                                                            </div>
+                                                        </form>
+                                                        <form class="form-inline" role="form">
+                                                            <div class="form-group">
+                                                                <label>Event:</label>
+                                                                <select class="form-control">
+                                                                    <option>Pull</option>
+                                                                    <option>Push</option>
+                                                                    <option>Both</option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+                                                        <p id="center-left">Http configuration</p>
+                                                        <form  class="form-inline" role="form">
+                                                            <div class="form-group">
+                                                                <label>Url:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                                <input class="form-control" placeholder="http url">
+                                                            </div>
+                                                        </form>
+                                                        <form class="form-inline">
+                                                            <label>Custom headers:</label>
+                                                            <span class="btn btn-info" id="showCustomHeader">add custom header  <i class="glyphicon glyphicon-plus"></i></span>
+                                                        </form>
+                                                        <div id="customHeader"><br>
+                                                            <div class="table-responsive col-md-9">
+                                                                <table class="table table-hover">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>key</th>
+                                                                        <th>value</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                            <form  class="form-inline" role="form">
+                                                                <div class="form-group">
+                                                                    <label>Header:</label>
+                                                                    <input class="form-control" type="text" placeholder="header name">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Value:</label>
+                                                                    <input class="form-control" type="text" placeholder="header value">
+                                                                </div>
+                                                            </form>
+                                                            <button class="btn btn-info">Save</button>
+                                                            <button class="btn btn-info" id="deleteHeader">Cancel</button><hr>
+                                                        </div>
+                                                        <form role="form" id="checkbox">
+                                                            <label>
+                                                                Select built-in body：
+                                                            </label><br>
+                                                            <input type="checkbox" value="">id<br>
+                                                            <input type="checkbox" value="" checked="checked">timestamp<br>
+                                                            <input type="checkbox" value="" checked="checked">action<br>
+                                                            <input type="checkbox" value="" checked="checked">repository<br>
+                                                            <input type="checkbox" value="" checked="checked">tag<br>
+                                                            <input type="checkbox" value="">request_addr<br>
+                                                            <input type="checkbox" value="" checked="checked">request_useragent
+                                                        </form>
+                                                        <form class="form-inline">
+                                                            <label>Custom body:</label>
+                                                            <span class="btn btn-info" id="showCustomBody">add custom body  <i class="glyphicon glyphicon-plus"></i></span>
+                                                        </form>
+                                                        <div id="customBody"><br>
+                                                            <div class="table-responsive col-md-9">
+                                                                <table class="table table-hover">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>key</th>
+                                                                        <th>value</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                            <form  class="form-inline" role="form">
+                                                                <div class="form-group">
+                                                                    <label>Header:</label>
+                                                                    <input class="form-control" type="text" placeholder="custom key">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Value:</label>
+                                                                    <input class="form-control" type="text" placeholder="custom value">
+                                                                </div>
+                                                            </form>
+                                                            <button class="btn btn-info">Save</button>
+                                                            <button class="btn btn-info" id="deleteBody">Cancel</button>
+                                                        </div>
+                                                        <button class="btn btn-primary bodyInfo">create</button>
+                                                        <button class="btn btn-primary bodyInfo">back</button>
+
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer" id="footerInfo">
+                                                    <p>Webhooks</p>
+                                                    <small>A webhook is an HTTP call-back triggered by a specific event.</small>
+                                                    <small>When the specified events happen, a POST request will be sent to each of the URLs you provide.</small>
+                                                    <small>You can create a single webhook to start and connect multiple webhooks to further build out your workflow.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div-->
+                            <!--放入webhooks中的静态界面-->
+                            <div class="tab-pane fade" id="webhooks">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="panel panel-default headBord">
+                                            <div class="panel-heading" id="headBack">
+                                                <h2 class="panel-title">Workflows</h2>
+                                            </div>
+                                            <div class="panel-body">
+                                                <!--使用flew布局-->
+                                                <div class="webhooks_Flex">
+                                                    <div class="webhooks_item1">
+                                                        <small>TRIGGER EVENT</small>
+                                                        <div class="flex_box">
+                                                            <div><i class="glyphicon glyphicon-leaf"></i></div>
+                                                            <div>Image Pushed</div>
+                                                        </div>
+                                                        <small>
+                                                            A Post request will be sent to the input URL.
+                                                            You can select the triger event, also you can specify the http header and http body
+                                                        </small>
+                                                    </div>
+
+                                                    <div class="webhooks_item2">
+                                                        <small>WEB HOOKS &nbsp;&nbsp;<i class="glyphicon glyphicon-plus" ng-show="!isshow_createWebhookForm" ng-click="isshow_createWebhookForm=true"></i><i ng-show="isshow_createWebhookForm" ng-click="isshow_createWebhookForm=false" class="glyphicon glyphicon-remove"></i></small>
+                                                        <!--初始显示 &&&  此时get下的分享数为0-->
+                                                        <div ng-show="!isshow_createWebhookForm && isshow_createWebhookbutton" ng-mouseover="changeButtonStyle = true" ng-mouseleave="changeButtonStyle = false">
+                                                            <h4>CREATE A WEBHOOK</h4>
+                                                            <button class="webhooks_button" ng-click="isshow_createWebhookForm=true" ng-class="{selectedWebhooks_Button:changeButtonStyle}"><i ng-show="!changeButtonStyle" class="glyphicon glyphicon-link"></i><i ng-show="changeButtonStyle" class="glyphicon glyphicon-plus" style="color: #ffffff"></i></button>
+                                                        </div>
+                                                        <!--创建webhooks部分-->
+                                                        <div class="createWebhookForm" ng-show="isshow_createWebhookForm">
+                                                            <form class="form-horizontal" role="form" name="webhooksForm" novalidate>
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">Name:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" class="form-control" ng-model="webhookName" placeholder="Name" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">Event</label>
+                                                                    <div class="col-sm-10">
+                                                                        <select  class="form-control" ng-model="selectWebOption">
+                                                                            <option>push</option>
+                                                                            <option>pull</option>
+                                                                            <option>both</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-2 col-sm-2 control-label">Http configuration: </label>
+                                                                    <div class="col-md-10 col-sm-10">
+                                                                        <label class="col-md-2 col-sm-2"><small>Url:</small></label>
+                                                                        <div class="col-md-8 col-sm-8">
+                                                                            <input type="text" class="form-control" ng-model="webhookUrl" placeholder="http url">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-2 col-sm-2 control-label"></label>
+                                                                    <div class="col-md-10 col-sm-10">
+                                                                        <label class="col-md-2 col-sm-2"><small>Custom headers:</small></label>
+                                                                        <!--button class="btn btn-primary">add custom header <i class="glyphicon glyphicon-plus" style="color: #ffffff"></i></button-->
+                                                                        <div class="col-md-8 col-sm-8">
+                                                                            <table class="table table-bordered table-hover">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th class="ng-hide" ng-show="showOperationHeader">key</th>
+                                                                                    <th class="ng-hide" ng-show="showOperationHeader">value</th>
+                                                                                    <th class="ng-hide" ng-show="showOperationHeader">operation</th>
+                                                                                    <th ng-show="!showOperationHeader"><button class="btn btn-default" ng-click="showOperationHeader=true;addHeadOpetion()">add custom header <i class="glyphicon glyphicon-plus"></i></button></th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr ng-repeat="headerOption in headerOptionList track by $index">
+                                                                                    <td><input placeholder="Header Name" id="headerName_{{$index}}"></td>
+                                                                                    <td><input placeholder="Header Value" id="headerValue_{{$index}}"></td>
+                                                                                    <td><i class="glyphicon glyphicon-plus" title="add custom header" ng-click="addHeadOpetion()"></i> &nbsp;&nbsp;
+                                                                                        <i class="glyphicon glyphicon-trash" title="delete" ng-click="delHeadOpetion($index)"></i></td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-2 col-sm-2 control-label"></label>
+                                                                    <div class="col-md-10 col-sm-10">
+                                                                        <label class="col-md-2 col-sm-2"><small>Select built-in body:</small></label>
+                                                                        <div class="col-md-8 col-sm-8">
+                                                                            <input type="checkbox" value="id" id="checkboxId">id<br>
+                                                                            <input type="checkbox" value="timestamp" checked="checked" id="checkboxTimestamp">timestamp<br>
+                                                                            <input type="checkbox" value="action" checked="checked" id="checkboxAction">action<br>
+                                                                            <input type="checkbox" value="repository" checked="checked" id="checkboxRepository">repository<br>
+                                                                            <input type="checkbox" value="tag" checked="checked" id="checkboxTag">tag<br>
+                                                                            <input type="checkbox" value="request_addr" id="checkboxRequest_addr">request_addr<br>
+                                                                            <input type="checkbox" value="request_useragent" id="checkboxRequest_useragent">request_useragent
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-2 col-sm-2 control-label"></label>
+                                                                    <div class="col-md-10 col-sm-10">
+                                                                        <label class="col-md-2 col-sm-2"><small>Custom body:</small></label>
+                                                                        <!--button class="btn btn-primary" ng-show="!isshow_addBody" ng-click="isshow_addBody=true">add customer body <i class="glyphicon glyphicon-plus" style="color: #ffffff"></i></button-->
+                                                                        <div class="col-md-8 col-sm-8">
+                                                                            <table class="table table-bordered table-hover">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th class="ng-hide" ng-show="showOperationBody">key</th>
+                                                                                    <th class="ng-hide" ng-show="showOperationBody">value</th>
+                                                                                    <th class="ng-hide" ng-show="showOperationBody">operation</th>
+                                                                                    <th ng-show="!showOperationBody"><button class="btn btn-default" ng-click="showOperationBody=true;addBodyOpetion()">add custom body <i class="glyphicon glyphicon-plus"></i></button></th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr ng-repeat="bodyOption in bodyOptionList track by $index">
+                                                                                    <td><input placeholder="Custom Name" id="bodyName_{{$index}}"></td>
+                                                                                    <td><input placeholder="Custom Value" id="bodyValue_{{$index}}"></td>
+                                                                                    <td><i class="glyphicon glyphicon-plus" title="add custom body" ng-click="addBodyOpetion()"></i> &nbsp;&nbsp;
+                                                                                        <i class="glyphicon glyphicon-trash" title="delete" ng-click="delBodyOpetion($index)"></i></td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <button class="btn btn-primary" ng-click="createWebhook()">Create</button>
+                                                                    <button class="btn btn-primary" ng-click="isshow_createWebhookForm=false">Back</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <!--get方法获取的已创建的分享连接-->
+                                                        <div class="row" ng-repeat="web in webhookRepoShow">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="flex_bottom">
+                                                                    <div class="item1_bottom">
+                                                                        <i class="glyphicon glyphicon-link"></i>
+                                                                    </div>
+                                                                    <div class="item2_bottom">
+                                                                        <div>{{web.name}}</div>
+                                                                        <div>{{web.url}}</div>
+                                                                    </div>
+                                                                    <div class="item3_bottom btn-group">
+                                                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ng-show="!isshow_itemHistory && !isshow_itemEdit">Menu <span class="caret"></span></button>
+                                                                        <ul class="dropdown-menu" role="menu">
+                                                                            <li><a ng-click="webhooksEdit(web)" ng-mouseup="isshow_itemEdit=true">Edit</a></li>
+                                                                            <li><a ng-click="webhookViewHistory(web)" ng-mouseup="isshow_itemHistory=true">View History</a></li>
+                                                                            <li><a ng-click="deleteWebhook(web.name)">Delete</a></li>
+                                                                        </ul>
+                                                                        <small ng-click="isshow_itemHistory=false" ng-show="isshow_itemHistory"><i class="glyphicon glyphicon-remove"></i>Hide history</small>
+                                                                        <small ng-click="isshow_itemEdit=false" ng-show="isshow_itemEdit"><i class="glyphicon glyphicon-remove"></i>Hide edit</small>
+                                                                    </div>
+                                                                    <!--view history-->
+                                                                    <div class="item1_history ng-hide" ng-show="isshow_itemHistory">
+                                                                        HISTORY
+                                                                    </div>
+                                                                    <div class="item2_history ng-hide" ng-show="isshow_itemHistory">
+                                                                        <table border="0" style="width: 100%" class="ng-hide" ng-show="isshow_historyNews">
+                                                                            <tr>
+                                                                                <th style="width: 50%">ID</th>
+                                                                                <th style="width: 20%">Status</th>
+                                                                                <th style="width: 30%">Date & Time</th>
+                                                                            </tr>
+                                                                            <tr ng-repeat="view in viewHistoryArray">
+                                                                                <td>{{view}}</td>
+                                                                                <td>{{view}}</td>
+                                                                                <td>{{view}}</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <p ng-show="!isshow_historyNews">No history news</p>
+                                                                    </div>
+                                                                    <!--view edit-->
+                                                                    <div class="item1_edit ng-hide" ng-show="isshow_itemEdit">
+                                                                        EDIT
+                                                                    </div>
+                                                                    <div class="item2_edit ng-hide" ng-show="isshow_itemEdit">
+                                                                        <div class="createWebhookForm1">
+                                                                            <form class="form-horizontal" role="form">
+                                                                                <div class="form-group">
+                                                                                    <label class="col-sm-2 control-label">Name:</label>
+                                                                                    <div class="col-sm-10">
+                                                                                        <input type="text" class="form-control" name="editWebhooksName" ng-model="editWebhooksName" id="editWebhooksName" placeholder="Name" readonly="readonly">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="col-sm-2 control-label">Event</label>
+                                                                                    <div class="col-sm-10">
+                                                                                        <select  class="form-control" ng-model="editSeleteEvent" id="editSeleteEvent">
+                                                                                            <option>push</option>
+                                                                                            <option>pull</option>
+                                                                                            <option>both</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="col-md-2 col-sm-2 control-label">Http configuration: </label>
+                                                                                    <div class="col-md-10 col-sm-10">
+                                                                                        <label class="col-md-2 col-sm-2"><small>Url:</small></label>
+                                                                                        <div class="col-md-8 col-sm-8">
+                                                                                            <input type="text" class="form-control" ng-model="editWebhooksUrl" id="editWebhooksUrl" placeholder="http url">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!--div class="form-group">
+                                                                                    <label class="col-md-2 col-sm-2 control-label"></label>
+                                                                                    <div class="col-md-10 col-sm-10">
+                                                                                        <label class="col-md-2 col-sm-2"><small>Custom headers:</small></label>
+                                                                                        <button class="btn btn-primary">add custom header <i class="glyphicon glyphicon-plus" style="color: #ffffff"></i></button>
+                                                                                        <div class="col-md-8 col-sm-8">
+                                                                                            <table class="table table-hover">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th>key</th>
+                                                                                                    <th>value</th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <tr>
+                                                                                                    <td><input class="inputStyleLine" placeholder="Header Name"></td>
+                                                                                                    <td><input class="inputStyleLine" placeholder="Header Value"></td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <button class="btn btn-primary">Save</button>
+                                                                                            <button class="btn btn-primary">Cancel</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div-->
+                                                                                <div class="form-group">
+                                                                                    <label class="col-md-2 col-sm-2 control-label"></label>
+                                                                                    <div class="col-md-10 col-sm-10">
+                                                                                        <label class="col-md-2 col-sm-2"><small>Custom headers:</small></label>
+                                                                                        <div class="col-md-8 col-sm-8">
+                                                                                            <table class="table table-bordered table-hover">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th class="ng-hide" ng-show="showViewEditHeader">key</th>
+                                                                                                    <th class="ng-hide" ng-show="showViewEditHeader">value</th>
+                                                                                                    <th class="ng-hide" ng-show="showViewEditHeader">operation</th>
+                                                                                                    <th ng-show="!showViewEditHeader"><button class="btn btn-default" ng-click="showViewEditHeader=true;addEditHeadOpetion()">add custom header <i class="glyphicon glyphicon-plus"></i></button></th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <tr ng-repeat="editHeaderOption in editHeaderOptionList track by $index">
+                                                                                                    <td><input placeholder="Header Name" id="viewEditHeaderName_{{$index}}" value="{{editHeaderOption.key}}"></td>
+                                                                                                    <td><input placeholder="Header Value" id="viewEditHeaderValue_{{$index}}" value="{{editHeaderOption.value}}"></td>
+                                                                                                    <td><i class="glyphicon glyphicon-plus" title="add custom header" ng-click="addEditHeadOpetion()"></i> &nbsp;&nbsp;
+                                                                                                        <i class="glyphicon glyphicon-trash" title="delete" ng-click="delEditHeadOpetion($index)"></i></td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="col-md-2 col-sm-2 control-label"></label>
+                                                                                    <div class="col-md-10 col-sm-10">
+                                                                                        <label class="col-md-2 col-sm-2"><small>Select built-in body:</small></label>
+                                                                                        <div class="col-md-8 col-sm-8">
+                                                                                            <input type="checkbox" value="id" ng-model="idCheckbox" id="idCheckbox">id<br>
+                                                                                            <input type="checkbox" value="timestamp" ng-model="timestampCheckbox" id="timestampCheckbox">timestamp<br>
+                                                                                            <input type="checkbox" value="action" ng-model="actionCheckbox" id="actionCheckbox">action<br>
+                                                                                            <input type="checkbox" value="repository" ng-model="repositoryCheckbox" id="repositoryCheckbox">repository<br>
+                                                                                            <input type="checkbox" value="tag" ng-model="tagCheckbox" id="tagCheckbox">tag<br>
+                                                                                            <input type="checkbox" value="request_addr" ng-model="request_addrCheckbox" id="request_addrCheckbox">request_addr<br>
+                                                                                            <input type="checkbox" value="request_useragent" ng-model="request_useragentCheckbox" id="request_useragentCheckbox">request_useragent
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!--div class="form-group">
+                                                                                    <label class="col-md-2 col-sm-2 control-label"></label>
+                                                                                    <div class="col-md-10 col-sm-10">
+                                                                                        <label class="col-md-2 col-sm-2"><small>Custom body:</small></label>
+                                                                                        <button class="btn btn-primary">add customer body <i class="glyphicon glyphicon-plus" style="color: #ffffff"></i></button>
+                                                                                        <div class="col-md-8 col-sm-8">
+                                                                                            <table class="table table-hover">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th>key</th>
+                                                                                                    <th>value</th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <tr>
+                                                                                                    <td><input class="inputStyleLine" placeholder="Custom Name"></td>
+                                                                                                    <td><input class="inputStyleLine" placeholder="Custom Value"></td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <button class="btn btn-primary">Save</button>
+                                                                                            <button class="btn btn-primary">Cancel</button>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div-->
+                                                                                <div class="form-group">
+                                                                                    <label class="col-md-2 col-sm-2 control-label"></label>
+                                                                                    <div class="col-md-10 col-sm-10">
+                                                                                        <label class="col-md-2 col-sm-2"><small>Custom body:</small></label>
+                                                                                        <div class="col-md-8 col-sm-8">
+                                                                                            <table class="table table-bordered table-hover">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th class="ng-hide" ng-show="showViewEditBody">key</th>
+                                                                                                    <th class="ng-hide" ng-show="showViewEditBody">value</th>
+                                                                                                    <th class="ng-hide" ng-show="showViewEditBody">operation</th>
+                                                                                                    <th ng-show="!showViewEditBody"><button class="btn btn-default" ng-click="showViewEditBody=true;addEditBodyOpetion()">add custom body <i class="glyphicon glyphicon-plus"></i></button></th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <tr ng-repeat="editBodyOption in editBodyOptionList track by $index">
+                                                                                                    <td><input placeholder="Body Name" id="viewEditBodyName_{{$index}}" value="{{editBodyOption.key}}"></td>
+                                                                                                    <td><input placeholder="Body Value" id="viewEditBodyValue_{{$index}}" value="{{editBodyOption.value}}"></td>
+                                                                                                    <td><i class="glyphicon glyphicon-plus" title="add custom header" ng-click="addEditBodyOpetion()"></i> &nbsp;&nbsp;
+                                                                                                        <i class="glyphicon glyphicon-trash" title="delete" ng-click="delEditBodyOpetion($index)"></i></td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <button class="btn btn-primary" ng-click="saveEditWebhook()">Save</button>
+                                                                                    <button class="btn btn-primary" ng-click="isshow_itemEdit=false">Back</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div><!--view edit end-->
+
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+
+                            <div class="tab-pane fade" id="history">
+                                <div style="padding:10px;">
+                                    history
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="setting">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="panel-group panel-group-success">
+                                            <div class="panel headBord">
+                                                <div class="panel-heading headBack">
+                                                    Visibility Settings
+                                                </div>
+                                                <div class="panel-collapse">
+                                                    <div class="panel-body">
+                                                        <div id="settingOne">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h3>Make this Repository Public</h3>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <button class="btn btn-primary" id="makePubic">Make Public</button>
+                                                                </div>
+                                                            </div>
+                                                            <h5>Public repositories are available to anyone and will appear in public search results.</h5>
+                                                        </div>
+                                                        <div id="settingTwo">
+                                                            <form role="form">
+                                                                <div class="form-group">
+                                                                    <label>Please type the name of your repository to make it public: <strong>{{reponame}}</strong></label>
+                                                                    <input class="form-control">
+                                                                </div>
+                                                            </form>
+                                                            <button class="btn btn-primary" id="canSettingTwo">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="panel-group panel-group-success">
+                                            <div class="panel headBord">
+                                                <div class="panel-heading headBack">
+                                                    Delete Repository
+                                                </div>
+                                                <div class="panel-collapse">
+                                                    <div class="panel-body">
+                                                        <div id="settingThree">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h3>Delete Repository</h3>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <button class="btn btn-danger" id="delSettingThree">Delete</button>
+                                                                </div>
+
+                                                            </div>
+                                                            <h5>Deleting a repository will destroy all images stored within it! This action is not reversible.</h5>
+                                                        </div>
+                                                        <div id="settingFour">
+                                                            <form role="form">
+                                                                <div class="form-group">
+                                                                    <label>Please type the name of your repository to confirm deletion: <strong>{{reponame}}</strong></label>
+                                                                    <input class="form-control">
+                                                                </div>
+                                                            </form>
+                                                            <button class="btn btn-primary" id="canSettingFour">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+             <!-- /. PAGE INNER  -->
+        </div>
+         <!-- /. PAGE WRAPPER  -->
+    </div>
+     <!-- /. WRAPPER  -->
+    <--写转化函数--!>
+    <script type="text/javascript">
+        function convert(){
+            var text = document.getElementById("oriContent").value;
+            var converter = new showdown.Converter();
+            var html = converter.makeHtml(text);
+            document.getElementById("result").innerHTML = html;
+        }
+    </script>

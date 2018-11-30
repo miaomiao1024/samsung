@@ -1,0 +1,65 @@
+
+<div id="wrapper" ng-controller="accountsCtrl">
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Accounts
+                        <a class="rightButton" ng-click="$location.path('createAccounts')"><span>Create Accounts <i class="fa fa-plus"></i> </span></a>
+                    </h1>
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Accounts Tables
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                    <tr class="accountsHeader">
+                                        <th style="text-align: left">Name</th>
+                                        <th>Create Time</th>
+                                        <th>Last Access</th>
+                                        <th>Is Active</th>
+                                        <th>Lock</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="accountBody" ng-repeat="item in accountInfo">
+                                        <td style="text-align: left">{{item.name}}</td>
+                                        <td>{{item.createTime}}</td>
+                                        <td>{{item.updateTime}}</td>
+                                        <td><span ng-class="{true:'stateActive',false:'stateNActive'}[item.isActive]">
+                                               <i ng-class="{true:'fa fa-refresh fa-spin',false:'fa fa-refresh'}[item.isActive]"></i> {{item.isActive}}
+                                            </span></td>
+                                        <td><button ng-click="changeStates(item.name,item.isActive)"><i ng-class="{false:'fa fa-lock',true:'fa fa-unlock'}[item.isActive]"></i></button></td>
+                                        <td><button ng-click="deleteAccounts(item.name)"><i class='glyphicon glyphicon-remove'></i></button></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <tm-pagination conf="paginationConf"></tm-pagination>
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+            </div>
+            <!-- /. ROW  -->
+        </div>
+        <!-- /. ROW  -->
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable();
+    });
+</script>
+

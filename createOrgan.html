@@ -1,0 +1,59 @@
+<div id="wrapper" ng-controller="organizationController">
+
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Create Organization
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <div class="boxSubmit">
+                        <form role="form" class="col-md-12" name="myForm" novalidate>
+                            <div class="form-group">
+                                <input class="form-control" id="createOrganizationName" placeholder="Name(required)" type="text" name="user" ng-model="user" ng-minlength="6" ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/" required>
+                                <div class="ng-hide" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+                                    <div class="warning" ng-show="myForm.user.$error.required">* Username must be filled in</div>
+                                    <div class="warning" ng-show="myForm.user.$error.minlength">* the length should be over 6 characters</div>
+                                    <div class="warning" ng-show="myForm.user.$error.pattern">* invalid format & should start with character</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="createOrganizationFullName" placeholder="Organization full name(optional)">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="createOrganizationCompany" placeholder="Company(optional)">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="createOrganizationLocation" placeholder="Location(optional)">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="createOrganizationEmail" placeholder="Email(optional)" type="email" name="email" ng-model="email">
+                                <div style="color:red" class="ng-hide" ng-show="myForm.email.$error.email">* Please enter a valid email address.</div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="createOrganizationWebsite" placeholder="Website url(optional)">
+                            </div>
+                        </form>
+                        <button class="btn btn-primary" id="createOrganizationForm-create-button" disabled="" ng-click="createOrganization()">Create</button>
+                    </div>
+
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div class="boxInfo">
+                        <small style="color: #1298c5;font-size: 25px">Create Organization</small>
+                        <small>Organizations can have multiple Teams.
+                            Teams can have differing permissions.
+                            Namespace is unique and this is where repositories for this organization will be created. </small>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+</div>

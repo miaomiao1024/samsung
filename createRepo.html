@@ -1,0 +1,76 @@
+﻿
+    <div id="wrapper" ng-controller="createRepoController">
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            Create Repository
+                        </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <div class="boxSubmit">
+                            <form role="form" class="form-horizontal" name="nameForm" novalidate>
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        <select class="form-control col-md-6" ng-model="namespaceSelect">
+                                            <option ng-repeat="select in orgName" ng-click="selectNamespace(select)">{{select.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input class="form-control" placeholder="Repository name" id='createRepoForm-name-input' type="text" name="user" ng-model="user" ng-minlength="6"  ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/" required>
+                                        <div class="ng-hide" ng-show="nameForm.user.$dirty && nameForm.user.$invalid">
+                                        <div class="warning" ng-show="nameForm.user.$error.required">* Username must be filled in</div>
+                                        <div class="warning" ng-show="nameForm.user.$error.minlength">* the length should be over 6 characters</div>
+                                        <div class="warning" ng-show="nameForm.user.$error.pattern">* invalid format & should start with character</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="2" placeholder="Short Description (100 Characters)" id="createRepoForm-shortDescription"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="6" placeholder="Full Description" id="createRepoForm-fullDescription" ng-keyup="convert()"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div id="createResult"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label>Visibility</label>
+                                        <select class="form-control" id="selectPrivate_Public">
+                                            <option>private</option>
+                                            <option>public</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                            <button class="btn btn-primary" id="createRepoButton" ng-click="createRepo()" disabled="false">Create</button>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="boxInfo">
+                            <small>1. Choose a namespace (Required)</small>
+                            <small>2. Add a repository name (Required)</small>
+                            <small>3. Add a short description</small>
+                            <small>4. Add markdown to the full description field</small>
+                            <small>5. Set it to be a private or public repository</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+    </div>

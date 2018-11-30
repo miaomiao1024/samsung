@@ -1,0 +1,83 @@
+<div id="wrapper" ng-controller="userProfileController">
+
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        User Profile
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            My Profile
+                        </div>
+                        <div class="panel-body">
+                            <form role="form">
+                                <fieldset disabled="">
+                                    <div class="form-group">
+                                        <label>name:</label>
+                                        <input class="form-control" type="text" placeholder="{{userProfileName}}" disabled="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>email:</label>
+                                        <input class="form-control" type="text" placeholder="{{userProfileEmail}}" disabled="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>createTime:</label>
+                                        <input class="form-control" type="text" placeholder="{{userProfileCreateTime}}" disabled="">
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            My organizations
+                        </div>
+                        <div class="panel-body">
+                            <table class="table" style="border-bottom: 1px solid #ddd;border-left: 1px solid #ddd;border-right: 1px solid #ddd">
+                                <tr style="color: #22b8eb">
+                                    <th>organization</th>
+                                    <th>more info</th>
+                                </tr>
+                                <tr ng-repeat="item in organizationName">
+                                    <th>{{item.name}}</th>
+                                    <th><i class="fa fa-arrow-circle-right" ng-click="jumpRepo(item)"  style="cursor: pointer"></i></th>
+                                </tr>
+                                <!--若没有数据显示部分-->
+                                <tr class="ng-hide" ng-show="tipOrganization">
+                                    <th>There are no any organizations</th>
+                                    <th></th>
+                                </tr>
+
+                            </table>
+                            <!--div id="userProfileOrganization" ng-repeat="item in organizationName">
+                                <p>{{item.name}}</p>
+                                <button style="float: right" class="btn"><i class="glyphicon glyphicon-remove"></i></button>
+                            </div-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--div class="row">
+                <div class="col-md-7">
+                    <div class="userButton">
+                        <button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>  Delete Account</button>
+                    </div>
+
+                </div>
+            </div-->
+
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+</div>

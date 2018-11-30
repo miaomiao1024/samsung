@@ -1,0 +1,52 @@
+<div id="wrapper" ng-controller="createAccountsCtrl">
+
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Create Accounts
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <div class="boxSubmit">
+                        <form role="form" class="col-md-12" name="myForm" novalidate>
+                            <div class="form-group">
+                                <input class="form-control" id="createAccountsName" placeholder="Enter account name" type="text" name="accountName" ng-model="accountName" ng-minlength="6" ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/" required>
+                                <div class="ng-hide" ng-show="myForm.accountName.$dirty && myForm.accountName.$invalid">
+                                    <div class="warning" ng-show="myForm.accountName.$error.required">* Username must be filled in</div>
+                                    <div class="warning" ng-show="myForm.accountName.$error.minlength">* the length should be over 6 characters</div>
+                                    <div class="warning" ng-show="myForm.accountName.$error.pattern">* invalid format & should start with character</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="createAccountsPassword" name="accountPassword" ng-model="accountPassword" placeholder="Enter account password" required>
+                                <div class="ng-hide" ng-show="myForm.accountPassword.$dirty && myForm.accountPassword.$invalid">
+                                    <div class="warning" ng-show="myForm.accountPassword.$error.required">* password must be filled in</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="createAccountsEmail" placeholder="Enter account email" type="email" name="accountsEmail" ng-model="accountsEmail">
+                                <div style="color:red" class="ng-hide" ng-show="myForm.accountsEmail.$error.email">* Please enter a valid email address.</div>
+                            </div>
+                            <label>Active</label>
+                            <div class="form-group">
+                                <select class="form-control" ng-model="accountsActive">
+                                    <option selected>true</option>
+                                    <option>false</option>
+                                </select>
+                            </div>
+                        </form>
+                        <button class="btn btn-primary"  ng-click="createAccounts()">Create</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+</div>

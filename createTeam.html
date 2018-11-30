@@ -1,0 +1,56 @@
+<div id="wrapper" ng-controller="repoController">
+
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Create Team
+                    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <div class="boxSubmit">
+                        <form role="form" class="col-md-12" name="teamForm" novalidate>
+                            <label>Team name</label>
+                            <div class="form-group">
+                                <input class="form-control" id="teamName" placeholder="Repository name" type="text" name="teamName" ng-model="teamName" ng-minlength="6"  ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/" required>
+                                <div class="ng-hide" ng-show="teamForm.teamName.$dirty && teamForm.teamName.$invalid">
+                                    <div class="warning" ng-show="teamForm.teamName.$error.required">* team name must be filled in</div>
+                                    <div class="warning" ng-show="teamForm.teamName.$error.minlength">* the length should be over 6 characters</div>
+                                    <div class="warning" ng-show="teamForm.teamName.$error.pattern">* invalid format & should start with character</div>
+                                </div>
+                            </div>
+                            <label>Team description</label>
+                            <div class="form-group">
+                                <textarea class="form-control" id="teamDescription" rows="6" placeholder="Full Description" name="teamDescription" ng-model="teamDescription" ng-minlength="6"  ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/" required></textarea>
+                                <div class="ng-hide" ng-show="teamForm.teamDescription.$dirty && teamForm.teamDescription.$invalid">
+                                    <div class="warning" ng-show="teamForm.teamDescription.$error.required">* team description must be filled in</div>
+                                    <div class="warning" ng-show="teamForm.teamDescription.$error.minlength">* the length should be over 6 characters</div>
+                                    <div class="warning" ng-show="teamForm.teamDescription.$error.pattern">* invalid format & should start with character</div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <button class="btn btn-primary" ng-click="addTeam()" id="createTeamButton" disabled="true">Add</button>
+                        <button class="btn btn-primary" ng-click="backTeam()">Back</button>
+                    </div>
+
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div class="boxInfo">
+                        <small>1. Team name (Required), the length should be within 3 ~ 64</small>
+                        <small>2. Team description (Required), the length should be within 3 ~ 256</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+</div>

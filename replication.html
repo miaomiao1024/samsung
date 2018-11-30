@@ -1,0 +1,86 @@
+﻿
+<div id="wrapper" ng-controller="replicationController">
+
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Replication <small></small>
+                        <a class="rightButton" ng-click="$location.path('createReplication')"><span>Create Replication<i class="fa fa-plus"></i> </span></a>
+                    </h1>
+                </div>
+            </div>
+
+            <!--放入webhook中的静态界面
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel-group panel-group-success" id="accordion">
+                        <div class="panel panel-default">
+
+                            <div class="panel-heading" id="headBack">
+                                <button class="btn btn-primary"  data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseOne"><i class="fa fa-plus"></i>Create Webhooks</button>
+                            </div>
+
+                            <div class="panel-collapse collapse" id="collapseOne">
+                                <div class="panel-body">
+                                    <p>Create new webhook</p>
+                                    <small>A Post request will be sent to the input URL.</small>
+                                </div>
+                            </div>
+
+                            <div class="panel-footer" style="border-top: 1px solid #c4cdda">
+                                <p>Webhooks</p>
+                                <small>A webhook is an HTTP call-back triggered by a specific event.</small>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+            <!--动态添加body & header的key和value字段
+            <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal"
+                    ng-click="entity={};entity.specificationOptionList=[{}]">
+                <i class="fa fa-file-o"></i> 新建
+            </button>
+
+
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">规格编辑</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable">
+                    <thead>
+                    <tr>
+                        <th class="sorting">规格选项</th>
+                        <th class="sorting">排序</th>
+                        <th class="sorting">操作</th>
+                    </thead>
+                    <button type="button" ng-click="addSpecOpetion()" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i>新增规格选项</button>
+                    <tbody>
+                    <tr ng-repeat="specOption in entity.specificationOptionList">
+                        <td><input class="form-control" ng-model="specOption.optionName" placeholder="规格选项"></td>
+                        <td><input class="form-control" ng-model="specOption.orders" placeholder="排序"></td>
+                        <td>
+                        <button type="button" ng-click="delSpecOpetion(index)" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i>删除</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="add()">保存</button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>-->
+
+
+
+        </div><!--page-inner end-->
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+</div>

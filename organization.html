@@ -1,0 +1,34 @@
+﻿<div id="wrapper" ng-controller="organizationController">
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Organizations
+                        <a class="rightButton" ng-click="$location.path('createOrgan')"><span>Create Organization<i class="fa fa-plus"></i></span> </a>
+                    </h1>
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <div class="row">
+                <div ng-repeat="org in organizationName track by $index" ng-click="jumpRepo(org)" ng-mouseover="fadeSiblings($index)" ng-mouseleave="reSiblings()">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="iconBox text-center" ng-class="{divOverOrg:$index==divOverOrgIndex}">
+                            <img src="assets/img/faUser.png">
+                            <p>{{org.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ng-hide" ng-show="tipOrganization">
+                <h3 style="color: #216880;margin-bottom: 20px">There are no any organizations</h3>
+                <h4>Organizations can have multiple Teams. Teams can have differing permissions.</h4>
+                <h4>To create Organization Click <a ng-click="$location.path('createOrgan')"><img src="assets/img/organization-button.png" style="height: 30px;width: 120px;border-radius: 3px"></a> button </h4>
+            </div>
+
+
+        </div>
+        <!-- /. ROW  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>

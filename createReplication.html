@@ -1,0 +1,166 @@
+<div id="wrapper" ng-controller="createController">
+
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <h1 class="page-header">
+                        Create Replication
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <div class="boxSubmit">
+                        <form class="form-horizontal" role="form" name="replicationForm" novalidate>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-2 control-label">Task Name:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputName" placeholder="Task Name" name="user" ng-model="user"  ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{2,63}$/" required>
+                                    <div class="ng-hide" ng-show="replicationForm.user.$dirty && replicationForm.user.$invalid">
+                                    <div class="warning" ng-show="replicationForm.user.$error.required">* can not be null</div>
+                                    <div class="warning" ng-show="replicationForm.user.$error.pattern">* invalid format</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label">Source Registry: </label>
+                                <div class="col-md-10 col-sm-10">
+                                    <label class="col-md-2 col-sm-2"><small>Host:</small></label>
+                                    <div class="col-md-8 col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Source Host" ng-disabled="all">
+                                    </div>
+                                    <div class="checkbox col-md-2 col-sm-2">
+                                        <label>
+                                            <input type="checkbox" ng-model="all" checked="checked"> Docker Hub
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label"></label>
+                                <div class="col-md-10 col-sm-10">
+                                    <label class="col-md-2 col-sm-2"><small>User name:</small></label>
+                                    <div class="col-md-8 col-sm-8">
+                                        <input type="text" class="form-control" placeholder="User name" name="UserName" ng-model="UserName"  ng-pattern="/^[a-zA-Z][a-zA-Z0-9_-]{2,63}$/" required>
+                                        <div class="ng-hide" ng-show="replicationForm.UserName.$dirty && replicationForm.UserName.$invalid">
+                                            <div class="warning" ng-show="replicationForm.UserName.$error.required">* can not be null</div>
+                                            <div class="warning" ng-show="replicationForm.UserName.$error.pattern">* invalid format</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label"></label>
+                                <div class="col-md-10 col-sm-10">
+                                    <label class="col-md-2 col-sm-2"><small>Password:</small></label>
+                                    <div class="col-md-8 col-sm-8">
+                                        <input type="password" class="form-control" placeholder="Password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label"></label>
+                                <div class="col-md-10 col-sm-10">
+                                    <label class="col-md-2 col-sm-2"><small>Namespace:</small></label>
+                                    <div class="col-md-8 col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Namespace">
+                                    </div>
+                                    <div class="checkbox col-md-2 col-sm-2">
+                                        <label>
+                                            <input type="checkbox" checked="checked" ng-model="All"> All Repository
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label">Target Registry: </label>
+                                <div class="col-md-10 col-sm-10">
+                                    <label class="col-md-2 col-sm-2"><small>Host:</small></label>
+                                    <div class="col-md-8 col-sm-8">
+                                        <input type="text" class="form-control" placeholder="https://registry.samsungcloud.org" disabled="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label"></label>
+                                <div class="col-md-10 col-sm-10">
+                                    <label class="col-md-2 col-sm-2"><small>Namespace:</small></label>
+                                    <div class="col-md-8 col-sm-8">
+                                        <select class="form-control">
+                                            <option>biwugang</option>
+                                            <option>ewwwwwwww</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label">Override Target:</label>
+                                <div class="col-md-10 col-sm-10">
+                                    <select class="form-control">
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label">Repository List:</label>
+                                <div class="col-md-10 col-sm-10">
+                                    <button class="btn btn-primary" ng-disabled="All">add replication  <i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-2 control-label"></label>
+                                <div class="col-md-10 col-sm-10">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Source</th>
+                                            <th>Target</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><input style="border-top: none;border-left:none;border-right:none;border-bottom:1px solid #ddd;width: 100%;padding: 0" value="Format is <repository>:<tag>"></td>
+                                            <td><input style="border-top: none;border-left:none;border-right:none;border-bottom:1px solid #ddd ;width: 100%;padding: 0" value="Format is <repository>:<tag>"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button class="btn btn-primary">Cancel</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="text-align: center">
+                                <button class="btn btn-primary">Create</button>
+                                <button class="btn btn-primary">Back</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div class="boxInfo">
+                        <small>1.  Add task name</small>
+                        <small>2. Set source registry parameters.</small>
+                        <small>1) Only one namespace can be set in one replication. </small>
+                        <small>2) By default, <i>all repository checker</i> is checked. It means that all images within this namespace will be replicated to target registry. If <i>all repository checker</i> is uncheked. It need input and add the repositories which will be replicated </small>
+                        <small>3. Set target registry parameters.</small>
+                        <small>4. Set Override the target repository or not. If <i>Override</i> is selected to yes, it means that if there is same repository name in target registry, the target repository will be override.</small>
+                        <small>5. Set repository list If <i>all repository checker</i> is checked. the respository list will be set to default value.</small>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+</div>
